@@ -5,4 +5,3 @@ This is a simple testing environment for most JS functions found in [this projec
 ## Contributors
 
 * Wouter Vlaeyen
-* Jan Temmerman
