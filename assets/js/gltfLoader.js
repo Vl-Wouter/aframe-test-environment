@@ -1,7 +1,7 @@
-const { fillRandom } = require('./tableFiller');
+const { fillWithData, fillRandom } = require('./tableFiller');
 const {objects} = require('./tableObjects');
 module.exports = (scene, model, options) => {
-  const {position, rotation, scale} = options;
+  const {position, rotation, scale, useData} = options;
   const el = document.createElement('a-entity');
   // Set attributes
   el.setAttribute('gltf-model', '#'+ model);
@@ -16,6 +16,10 @@ module.exports = (scene, model, options) => {
     THREE.Math.degToRad(rotation.z)
   );
   el.object3D.position.set(position.x, position.y, position.z);
-  fillRandom(objects, 4, el);
+  if (useData === true) {
+    fillWithData(options.children, 4, el);
+  } else {
+    fillRandom(options.children, 4, el);
+  }
   scene.appendChild(el); 
 };
