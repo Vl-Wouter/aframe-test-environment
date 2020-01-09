@@ -3,17 +3,18 @@ const startPos = [0, 1, 0];
 const startRot = [0, 0, 0];
 const scene = document.querySelector("a-scene");
 const gltfLoader = require("./gltfLoader");
+const tables = 9;
 
-for(let i = 0; i < 7; i++) {
+for(let i = 0; i < tables; i++) {
   let rotationOffset = 90 / 7;
   let rotationModifier = 90;
-  if (i == 3) rotationModifier = 0;
+  i === Math.floor(tables / 2) ? rotationModifier = 0 : "";
   const radius = 10;
   const offset = {
     x: -5,
     y: -8
   };
-  gltfLoader(scene, 'table', {
+  gltfLoader(scene, 'base_table', {
     rotation: {
       x: 0,
       y: rotationOffset * i + rotationModifier,

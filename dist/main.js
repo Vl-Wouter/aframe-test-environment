@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const tableFiller = __webpack_require__(/*! ./tableFiller */ \"./assets/js/tableFiller.js\");\nmodule.exports = (scene, model, options) => {\n  const {position, rotation, scale} = options;\n  const el = document.createElement('a-entity');\n  // Set attributes\n  el.setAttribute('gltf-model', '#'+ model);\n  el.object3D.scale.set(\n    scale.x,\n    scale.y,\n    scale.z\n  );\n  el.object3D.rotation.set(\n    THREE.Math.degToRad(rotation.x),\n    THREE.Math.degToRad(rotation.y),\n    THREE.Math.degToRad(rotation.z)\n  );\n  el.object3D.position.set(position.x, position.y, position.z);\n  tableFiller(['mug', 'chips'], 6, el);\n  scene.appendChild(el); \n};\n\n//# sourceURL=webpack:///./assets/js/gltfLoader.js?");
+eval("const { fillRandom } = __webpack_require__(/*! ./tableFiller */ \"./assets/js/tableFiller.js\");\nconst {objects} = __webpack_require__(/*! ./tableObjects */ \"./assets/js/tableObjects.js\");\nmodule.exports = (scene, model, options) => {\n  const {position, rotation, scale} = options;\n  const el = document.createElement('a-entity');\n  // Set attributes\n  el.setAttribute('gltf-model', '#'+ model);\n  el.object3D.scale.set(\n    scale.x,\n    scale.y,\n    scale.z\n  );\n  el.object3D.rotation.set(\n    THREE.Math.degToRad(rotation.x),\n    THREE.Math.degToRad(rotation.y),\n    THREE.Math.degToRad(rotation.z)\n  );\n  el.object3D.position.set(position.x, position.y, position.z);\n  fillRandom(objects, 4, el);\n  scene.appendChild(el); \n};\n\n//# sourceURL=webpack:///./assets/js/gltfLoader.js?");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ eval("const tableFiller = __webpack_require__(/*! ./tableFiller */ \"./assets/js
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Create tables\nconst startPos = [0, 1, 0];\nconst startRot = [0, 0, 0];\nconst scene = document.querySelector(\"a-scene\");\nconst gltfLoader = __webpack_require__(/*! ./gltfLoader */ \"./assets/js/gltfLoader.js\");\n\nfor(let i = 0; i < 7; i++) {\n  let rotationOffset = 90 / 7;\n  let rotationModifier = 90;\n  if (i == 3) rotationModifier = 0;\n  const radius = 10;\n  const offset = {\n    x: -5,\n    y: -8\n  };\n  gltfLoader(scene, 'table', {\n    rotation: {\n      x: 0,\n      y: rotationOffset * i + rotationModifier,\n      z: 0,\n    },\n    position: {\n      x: offset.x + radius * Math.sin(rotationOffset * i * Math.PI / 180),\n      y: 0,\n      z: offset.y + radius * Math.cos(rotationOffset * i * Math.PI / 180),\n    },\n    scale: {\n      x: 0.2,\n      y: 0.2,\n      z: 0.2,\n    }\n  })\n}\n\n\n//# sourceURL=webpack:///./assets/js/index.js?");
+eval("// Create tables\nconst startPos = [0, 1, 0];\nconst startRot = [0, 0, 0];\nconst scene = document.querySelector(\"a-scene\");\nconst gltfLoader = __webpack_require__(/*! ./gltfLoader */ \"./assets/js/gltfLoader.js\");\nconst tables = 9;\n\nfor(let i = 0; i < tables; i++) {\n  let rotationOffset = 90 / 7;\n  let rotationModifier = 90;\n  i === Math.floor(tables / 2) ? rotationModifier = 0 : \"\";\n  const radius = 10;\n  const offset = {\n    x: -5,\n    y: -8\n  };\n  gltfLoader(scene, 'base_table', {\n    rotation: {\n      x: 0,\n      y: rotationOffset * i + rotationModifier,\n      z: 0,\n    },\n    position: {\n      x: offset.x + radius * Math.sin(rotationOffset * i * Math.PI / 180),\n      y: 0,\n      z: offset.y + radius * Math.cos(rotationOffset * i * Math.PI / 180),\n    },\n    scale: {\n      x: 0.2,\n      y: 0.2,\n      z: 0.2,\n    }\n  })\n}\n\n\n//# sourceURL=webpack:///./assets/js/index.js?");
 
 /***/ }),
 
@@ -113,9 +113,20 @@ eval("// Create tables\nconst startPos = [0, 1, 0];\nconst startRot = [0, 0, 0];
   !*** ./assets/js/tableFiller.js ***!
   \**********************************/
 /*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const { tableSlots } = __webpack_require__(/*! ./tableObjects */ \"./assets/js/tableObjects.js\");\n\nconst fillRandom = (objects, amount, parent) => {\n  for (let i = 0; i < amount; i++) {\n    const { rotation } = parent.object3D;\n    const childId = Math.floor(Math.random() * objects.length);\n    const child = document.createElement('a-entity');\n    const positionOffset = 3 / amount;\n    child.setAttribute('gltf-model', `#${objects[childId]}`);\n    console.log(tableSlots[i])\n    child.object3D.position.set(\n      tableSlots[i],\n      1.7,\n      Math.random() * (0.3 - (-0.3)) + (-0.3),\n    );\n    child.object3D.rotation.set(\n      0,\n      rotation.y,\n      0\n    );\n    child.object3D.scale.set(0.2, 0.2, 0.2);\n  \n    parent.appendChild(child);\n  }\n}\n\nmodule.exports = {\n  fillRandom\n}\n\n//# sourceURL=webpack:///./assets/js/tableFiller.js?");
+
+/***/ }),
+
+/***/ "./assets/js/tableObjects.js":
+/*!***********************************!*\
+  !*** ./assets/js/tableObjects.js ***!
+  \***********************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = (objects, amount, parent) => {\n  for (let i = 0; i < amount; i++) {\n    const { rotation } = parent.object3D;\n    const childId = Math.floor(Math.random() * objects.length);\n    const child = document.createElement('a-entity');\n    const positionOffset = 3 / amount;\n    console.log(i, positionOffset * (i + 1) - 1);\n    child.setAttribute('gltf-model', `#${objects[childId]}`);\n    child.object3D.position.set(\n      (positionOffset * (i + 1)),\n      1.7,\n      Math.random() * (0.3 - (-0.3)) + (-0.3),\n    );\n    child.object3D.rotation.set(\n      0,\n      rotation.y,\n      0\n    );\n    child.object3D.scale.set(0.2, 0.2, 0.2);\n  \n    parent.appendChild(child);\n  }\n}\n\n//# sourceURL=webpack:///./assets/js/tableFiller.js?");
+eval("let objects = [];\nconst assets = document.querySelectorAll('a-asset-item');\n\nassets.forEach(asset => {\n  asset.id.split(\"_\")[0] === 'table' ? objects.push(asset.id)  :\"\";\n});\n\nconst tableSlots = [-1.5, -0.75, 0.75, 1.5];\n\nmodule.exports = {\n  objects,\n  tableSlots\n};\n\n//# sourceURL=webpack:///./assets/js/tableObjects.js?");
 
 /***/ })
 
