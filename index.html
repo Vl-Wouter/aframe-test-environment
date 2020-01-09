@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Table Test</title>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-asset-item
+          id="table"
+          src="./assets/models/table_long.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mug"
+          src="./assets/models/koffiemok.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="chips"
+          src="./assets/models/chips.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="frigo"
+          src="./assets/models/frigo.gltf"
+        ></a-asset-item>
+      </a-assets>
+      <section id="tables"></section>
+      <a-plane
+        width="10"
+        height="10"
+        color="#edbd45"
+        position="0 0 0"
+        rotation="-90 0 0"
+      ></a-plane>
+      <a-sky color="#ececec"></a-sky>
+    </a-scene>
+    <script src="./dist/main.js"></script>
+  </body>
+</html>
