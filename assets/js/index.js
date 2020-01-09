@@ -6,7 +6,7 @@ const gltfLoader = require("./gltfLoader");
 const tables = 9;
 
 for(let i = 0; i < tables; i++) {
-  let rotationOffset = 90 / 7;
+  let rotationOffset = 90 / tables;
   let rotationModifier = 90;
   i === Math.floor(tables / 2) ? rotationModifier = 0 : "";
   const radius = 10;
