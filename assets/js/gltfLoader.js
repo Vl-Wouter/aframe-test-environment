@@ -1,4 +1,5 @@
-const tableFiller = require('./tableFiller');
+const { fillRandom } = require('./tableFiller');
+const {objects} = require('./tableObjects');
 module.exports = (scene, model, options) => {
   const {position, rotation, scale} = options;
   const el = document.createElement('a-entity');
@@ -15,6 +16,6 @@ module.exports = (scene, model, options) => {
     THREE.Math.degToRad(rotation.z)
   );
   el.object3D.position.set(position.x, position.y, position.z);
-  tableFiller(['mug', 'chips'], 6, el);
+  fillRandom(objects, 4, el);
   scene.appendChild(el); 
 };
